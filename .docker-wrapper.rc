@@ -1,0 +1,1 @@
+DOCKER_WRAPPER_IMAGE_ruby() { echo "2.6.3-stretch"; }
