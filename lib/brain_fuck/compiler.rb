@@ -15,7 +15,7 @@ module BrainFuck
 
         def flatten!
           if @groups.length > 0
-            raise GroupUnmatchError, "there is no ]"
+            raise GroupUnmatchError, "there is no end of group"
           end
 
           @instructions
