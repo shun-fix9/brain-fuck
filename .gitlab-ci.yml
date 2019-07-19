@@ -1,0 +1,14 @@
+image: ruby:2.6.3-stretch
+
+test:
+  except:
+    - release
+    - tags
+  script:
+    - rake test
+
+release:
+  only:
+    - release@shun-fix9-labo/brain-fuck
+  script:
+    - ./bin/push_tags.sh
