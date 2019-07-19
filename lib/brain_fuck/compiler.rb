@@ -1,5 +1,7 @@
 module BrainFuck
   module Compiler
+    class GroupUnmatchError < RuntimeError; end
+
     class Base
       def initialize
         @instructions = []
@@ -11,20 +13,16 @@ module BrainFuck
         flatten!
       end
 
-      private
-
-        def flatten!
-          if @groups.length > 0
-            raise GroupUnmatchError, "there is no end of group"
-          end
-
-          @instructions
+      def flatten!
+        if @groups.length > 0
+          raise GroupUnmatchError, "too many group beginnings"
         end
+
+        @instructions
+      end
     end
 
     class Standard < Base
-      class GroupUnmatchError < RuntimeError; end
-
       def compile(source)
         source.each_char.each{|char|
           parse(char)
@@ -47,7 +45,7 @@ module BrainFuck
             if @groups.length > 0
               @groups.pop
             else
-              raise GroupUnmatchError, "] is not matched"
+              raise GroupUnmatchError, "to many group endings"
             end
           end
 
