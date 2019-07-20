@@ -1,6 +1,7 @@
 module BrainFuck
   class Engine
     class InvalidInputError < RuntimeError; end
+    class NullOutputError < RuntimeError; end
 
     def initialize(input, &output)
       unless input.respond_to?(:get)
@@ -15,6 +16,10 @@ module BrainFuck
     end
 
     attr_reader :array, :pointer
+
+    def current
+      @array[@pointer].to_i
+    end
 
     def increment
       @array[@pointer] ||= 0
@@ -42,11 +47,11 @@ module BrainFuck
       @array[@pointer] = value
     end
     def put
-      @output.call @array[@pointer].to_i
-    end
+      unless @output
+        raise NullOutputError
+      end
 
-    def current
-      @array[@pointer].to_i
+      @output.call @array[@pointer].to_i
     end
   end
 end
