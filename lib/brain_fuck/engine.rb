@@ -1,6 +1,12 @@
 module BrainFuck
   class Engine
+    class InvalidInputError < RuntimeError; end
+
     def initialize(input, &output)
+      unless input.respond_to?(:get)
+        raise ArgumentError, "input must respond to `get`"
+      end
+
       @input = input
       @output = output
 
@@ -19,18 +25,24 @@ module BrainFuck
       @array[@pointer] -= 1
     end
 
-    def shift
+    def shift_right
       @pointer += 1
     end
-    def unshift
+    def shift_left
       @pointer -= 1
     end
 
-    def get_char
-      @array[@pointer] = @input.getc.ord
+    def get
+      value = @input.get
+
+      unless value.is_a?(Integer)
+        raise InvalidInputError
+      end
+
+      @array[@pointer] = value
     end
-    def put_char
-      @output.call @array[@pointer]
+    def put
+      @output.call @array[@pointer].to_i
     end
 
     def current
