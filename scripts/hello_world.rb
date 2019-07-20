@@ -6,8 +6,8 @@ source = "
 "
 instructions = BrainFuck::Compiler::Standard.new.compile!(source)
 
-#input = BrainFuck::Input::Null.new
-input = BrainFuck::Input::Stream.new($stdin)
+input = BrainFuck::Input::Null.new
+#input = BrainFuck::Input::StringStream.new($stdin)
 engine = BrainFuck::Engine.new(input) do |output|
   $stdout.print "#{output.chr}"
 end

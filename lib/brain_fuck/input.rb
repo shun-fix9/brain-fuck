@@ -3,12 +3,12 @@ module BrainFuck
     class EOFError < RuntimeError; end
 
     class Null
-      def getc
+      def get
         raise EOFError
       end
     end
 
-    class Stream
+    class StringStream
       def initialize(stream)
         if stream.respond_to?(:getc) and stream.respond_to?(:eof?)
           @stream = stream
@@ -17,12 +17,12 @@ module BrainFuck
         end
       end
 
-      def getc
+      def get
         if @stream.eof?
           raise EOFError
         end
 
-        @stream.getc
+        @stream.getc.ord
       end
     end
   end

@@ -8,13 +8,20 @@ module BrainFuck
         @groups = []
       end
 
+      def current_depth
+        @groups.length
+      end
+      def group_proccessing?
+        current_depth > 0
+      end
+
       def compile!(source)
         compile(source)
         flatten!
       end
 
       def flatten!
-        if @groups.length > 0
+        if group_proccessing?
           raise GroupUnmatchError, "too many group beginnings"
         end
 
@@ -34,30 +41,30 @@ module BrainFuck
 
         def parse(char)
           case char
-          when "+" then instruction = Instruction::Increment.new
-          when "-" then instruction = Instruction::Decrement.new
-          when ">" then instruction = Instruction::Shift.new
-          when "<" then instruction = Instruction::Unshift.new
-          when "," then instruction = Instruction::GetChar.new
-          when "." then instruction = Instruction::PutChar.new
-          when "[" then instruction = Instruction::Group.new; is_group = true
+          when "+" then instruction = Instruction.increment
+          when "-" then instruction = Instruction.decrement
+          when ">" then instruction = Instruction.shift_right
+          when "<" then instruction = Instruction.shift_left
+          when "," then instruction = Instruction.get
+          when "." then instruction = Instruction.put
+          when "[" then instruction = Instruction.group; is_group_start = true
           when "]"
-            if @groups.length > 0
-              @groups.pop
-            else
+            unless group_proccessing?
               raise GroupUnmatchError, "to many group endings"
             end
+
+            @groups.pop
           end
 
           if instruction
-            if @groups.length > 0
+            if group_proccessing?
               @groups.last.push instruction
             else
               @instructions.push instruction
             end
           end
 
-          if is_group
+          if is_group_start
             @groups.push instruction
           end
         end

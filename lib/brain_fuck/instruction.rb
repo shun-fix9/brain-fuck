@@ -1,5 +1,29 @@
 module BrainFuck
   module Instruction
+    class << self
+      def increment
+        @increment ||= Increment.new
+      end
+      def decrement
+        @decrement ||= Decrement.new
+      end
+      def shift_right
+        @shift ||= ShiftRight.new
+      end
+      def shift_left
+        @shift_left ||= ShiftLeft.new
+      end
+      def get
+        @get ||= Get.new
+      end
+      def put
+        @put ||= Put.new
+      end
+      def group(instructions=[])
+        Group.new(instructions)
+      end
+    end
+
     class Increment
       def process!(engine)
         engine.increment
@@ -18,36 +42,36 @@ module BrainFuck
       end
     end
 
-    class Shift
+    class ShiftRight
       def process!(engine)
-        engine.shift
+        engine.shift_right
       end
       def to_s
         ">"
       end
     end
 
-    class Unshift
+    class ShiftLeft
       def process!(engine)
-        engine.unshift
+        engine.shift_left
       end
       def to_s
         "<"
       end
     end
 
-    class GetChar
+    class Get
       def process!(engine)
-        engine.get_char
+        engine.get
       end
       def to_s
         ","
       end
     end
 
-    class PutChar
+    class Put
       def process!(engine)
-        engine.put_char
+        engine.put
       end
       def to_s
         "."

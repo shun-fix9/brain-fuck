@@ -2,6 +2,12 @@
 
 brain fuck implementation by ruby
 
+```bash
+$ bundle exec ruby -Ilib scripts/hello_world.rb
+Hello, world!
+
+```
+
 
 ###### Table of Contents
 
