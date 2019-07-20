@@ -1,3 +1,7 @@
+# Version : 0.3.0
+
+fix: clear compile data when instruction list returned
+
 # Version : 0.2.0
 
 refactor
