@@ -19,14 +19,14 @@ module BrainFuck
       engine = null_engine
       Instruction::Increment.new.process!(engine)
 
-      assert_equal(1, engine.array[0])
+      assert_equal(1, engine[0])
     end
 
     def test_decrement
       engine = null_engine
       Instruction::Decrement.new.process!(engine)
 
-      assert_equal(-1, engine.array[0])
+      assert_equal(-1, engine[0])
     end
 
     def test_shift_right
@@ -34,7 +34,7 @@ module BrainFuck
       Instruction::ShiftRight.new.process!(engine)
       Instruction::Increment.new.process!(engine)
 
-      assert_equal(1, engine.array[1])
+      assert_equal(1, engine[1])
     end
 
     def test_shift_left
@@ -44,14 +44,14 @@ module BrainFuck
       Instruction::ShiftLeft.new.process!(engine)
       Instruction::Increment.new.process!(engine)
 
-      assert_equal(1, engine.array[1])
+      assert_equal(1, engine[1])
     end
 
     def test_get
       engine = input_engine("A")
       Instruction::Get.new.process!(engine)
 
-      assert_equal("A".ord, engine.array[0])
+      assert_equal("A".ord, engine[0])
     end
 
     def test_put
@@ -85,7 +85,7 @@ module BrainFuck
         instruction.process!(engine)
       end
 
-      assert_equal(6, engine.array[1])
+      assert_equal(6, engine[1])
     end
   end
 end
