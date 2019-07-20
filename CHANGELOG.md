@@ -1,3 +1,7 @@
+# Version : 0.4.0
+
+fix: engine-data to read-only
+
 # Version : 0.3.0
 
 fix: clear compile data when instruction list returned

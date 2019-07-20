@@ -15,7 +15,11 @@ module BrainFuck
       @pointer = 0
     end
 
-    attr_reader :array, :pointer
+    attr_reader :pointer
+
+    def [](index)
+      @array[index]
+    end
 
     def current
       @array[@pointer].to_i
@@ -46,12 +50,13 @@ module BrainFuck
 
       @array[@pointer] = value
     end
+
     def put
       unless @output
         raise NullOutputError
       end
 
-      @output.call @array[@pointer].to_i
+      @output.call current
     end
   end
 end
