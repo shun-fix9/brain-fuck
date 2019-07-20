@@ -8,6 +8,11 @@ module BrainFuck
         @groups = []
       end
 
+      def clear
+        @instructions.clear
+        @groups.clear
+      end
+
       def current_depth
         @groups.length
       end
@@ -17,15 +22,18 @@ module BrainFuck
 
       def compile!(source)
         compile(source)
-        flatten!
+        to_instructions!
       end
 
-      def flatten!
+      def to_instructions!
         if group_proccessing?
           raise GroupUnmatchError, "too many group beginnings"
         end
 
-        @instructions
+        instructions = @instructions.dup
+        clear
+
+        instructions
       end
     end
 
