@@ -9,7 +9,7 @@ module BrainFuck
       Engine.new(Input::Null.new){|output| nil}
     end
     def input_engine(str)
-      Engine.new(Input::Stream.new(StringIO.new(str))){|output| nil}
+      Engine.new(Input::StringStream.new(StringIO.new(str))){|output| nil}
     end
     def output_engine(&block)
       Engine.new(Input::Null.new, &block)
@@ -29,32 +29,32 @@ module BrainFuck
       assert_equal(-1, engine.array[0])
     end
 
-    def test_shift
+    def test_shift_right
       engine = null_engine
-      Instruction::Shift.new.process!(engine)
+      Instruction::ShiftRight.new.process!(engine)
       Instruction::Increment.new.process!(engine)
 
       assert_equal(1, engine.array[1])
     end
 
-    def test_unshift
+    def test_shift_left
       engine = null_engine
-      Instruction::Shift.new.process!(engine)
-      Instruction::Shift.new.process!(engine)
-      Instruction::Unshift.new.process!(engine)
+      Instruction::ShiftRight.new.process!(engine)
+      Instruction::ShiftRight.new.process!(engine)
+      Instruction::ShiftLeft.new.process!(engine)
       Instruction::Increment.new.process!(engine)
 
       assert_equal(1, engine.array[1])
     end
 
-    def test_get_char
+    def test_get
       engine = input_engine("A")
-      Instruction::GetChar.new.process!(engine)
+      Instruction::Get.new.process!(engine)
 
       assert_equal("A".ord, engine.array[0])
     end
 
-    def test_put_char
+    def test_put
       outputs = []
       engine = output_engine{|output|
         outputs.push output
@@ -63,7 +63,7 @@ module BrainFuck
         Instruction::Increment.new.process!(engine)
       end
 
-      Instruction::PutChar.new.process!(engine)
+      Instruction::Put.new.process!(engine)
 
       assert_equal(["A".ord], outputs)
     end
@@ -74,11 +74,11 @@ module BrainFuck
         Instruction::Increment.new,
         Instruction::Increment.new,
         Instruction::Group.new([
-          Instruction::Shift.new,
+          Instruction::ShiftRight.new,
           Instruction::Increment.new,
           Instruction::Increment.new,
           Instruction::Increment.new,
-          Instruction::Unshift.new,
+          Instruction::ShiftLeft.new,
           Instruction::Decrement.new,
         ])
       ].each do |instruction|

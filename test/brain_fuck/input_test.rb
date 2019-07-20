@@ -6,21 +6,21 @@ module BrainFuck
   class InputTest < Minitest::Test
     def test_null_input
       assert_raises(Input::EOFError) do
-        Input::Null.new.getc
+        Input::Null.new.get
       end
     end
 
     def test_stream_input
-      input = Input::Stream.new(StringIO.new("abcde"))
+      input = Input::StringStream.new(StringIO.new("abcde"))
 
-      assert_equal("a", input.getc)
-      assert_equal("b", input.getc)
-      assert_equal("c", input.getc)
-      assert_equal("d", input.getc)
-      assert_equal("e", input.getc)
+      assert_equal("a".ord, input.get)
+      assert_equal("b".ord, input.get)
+      assert_equal("c".ord, input.get)
+      assert_equal("d".ord, input.get)
+      assert_equal("e".ord, input.get)
 
       assert_raises(Input::EOFError) do
-        input.getc
+        input.get
       end
     end
   end
