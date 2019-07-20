@@ -2,7 +2,7 @@ module BrainFuck
   module Compiler
     class GroupUnmatchError < RuntimeError; end
 
-    class Base
+    class Standard
       def initialize
         @instructions = []
         @groups = []
@@ -20,6 +20,13 @@ module BrainFuck
         current_depth > 0
       end
 
+      def compile(source)
+        source.each_char.each{|char|
+          parse(char)
+        }
+        nil
+      end
+
       def compile!(source)
         compile(source)
         to_instructions!
@@ -34,15 +41,6 @@ module BrainFuck
         clear
 
         instructions
-      end
-    end
-
-    class Standard < Base
-      def compile(source)
-        source.each_char.each{|char|
-          parse(char)
-        }
-        nil
       end
 
       private
