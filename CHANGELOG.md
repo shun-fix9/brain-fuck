@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## Version : 0.6.1
+
+- fix: releaseignore : See merge request shun-fix9-base/labo/brain-fuck!15
+
+
 ## Version : 0.6.0
 
 - fix: gitlab-ci : See merge request shun-fix9-base/labo/brain-fuck!14
