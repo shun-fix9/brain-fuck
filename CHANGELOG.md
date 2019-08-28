@@ -1,3 +1,9 @@
+# CHANGELOG
+
+## Version : 0.6.0
+
+- fix: gitlab-ci : See merge request shun-fix9-base/labo/brain-fuck!14
+
 # Version : 0.5.0
 
 remove: Compiler::Base
